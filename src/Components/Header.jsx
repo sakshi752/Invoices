@@ -3,6 +3,7 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { CgGirl } from "react-icons/cg";
 import useTheme from '../hooks/useTheme';
 import { motion } from "framer-motion";
+import avatar from '../assets/avatar.jpg'
 
 const Header = () => {
     const [colorTheme, setTheme] = useTheme();
@@ -87,7 +88,7 @@ const Header = () => {
                             {/* border */}
                         </div>
                         <div>
-                            <CgGirl className='text-4xl text-pink-400 mb-6' />
+                            <img src={avatar} className='h-14 mb-3 rounded-full' alt="" />
                         </div>
                     </div>
                 </div>

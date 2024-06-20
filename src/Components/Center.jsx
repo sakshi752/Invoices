@@ -3,7 +3,8 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
-import { IoIosArrowForward } from "react-icons/io";
+import InvoiceCard from './InvoiceCard';
+
 
 const Center = () => {
     const [isDropDown, setIsDropDown] = useState(false);
@@ -125,19 +126,7 @@ const Center = () => {
                                 // exit={{ opacity: 0, y: 50 }}
                                 transition={{ duration: 0.5 }}
                             >
-                                <div className='dark:text-white flex justify-between ease-in-out duration-100 dark:bg-[#1E2139] bg-white py-4 px-6 rounded hover:border border-[#7C5DFA]'>
-                                    <div className='flex items-center gap-6'>
-                                        <h1>#{invoice.id}</h1>
-                                        <p className='text-sm text-gray-400 font-light'>{invoice.paymentDue}</p>
-                                        <p className='text-sm text-gray-400 font-light'>{invoice.clientName}</p>
-                                    </div>
-                                    <div className='flex items-center '>
-                                        <p>{invoice.total}</p>
-                                        <p className='bg-green-50 p-2 rounded ml-6 text-green-500'>{invoice.status}</p>
-                                        <IoIosArrowForward className='text-[hsl(252,94%,67%)] ml-3'/>
-                                    </div>
-
-                                </div>
+                                <InvoiceCard invoice={invoice} />
                             </motion.div>
 
                         ))}
