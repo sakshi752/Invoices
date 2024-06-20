@@ -3,6 +3,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
+import { IoIosArrowForward } from "react-icons/io";
 
 const Center = () => {
     const [isDropDown, setIsDropDown] = useState(false);
@@ -47,22 +48,22 @@ const Center = () => {
         setIsDropDown(false)
     };
 
-    const invoices=useSelector((state)=>state.invoices);
+    const invoices = useSelector((state) => state.invoices.allInvoices);
     console.log(invoices)
 
     return (
         <div>
             <div className='dark:bg-[#141625] scrollbar-hide duration-300 min-h-screen bg-[#f8f8fb] py-[34px] px-2 md:px-8 lg:px-12 lg:py-[72px] w-full'>
-                <div className='max-w-4xl flex flex-col mx-auto my-auto'>
+                <div className='max-w-3xl flex flex-col mx-auto my-auto'>
                     {/* header */}
-                    <div className='w-full flex flex-col md:flex-row items-center justify-between border-b pb-4 border-[#7C5DFA] gap-7'>
+                    <div className='w-full flex items-center justify-between border-b pb-4 border-[#7C5DFA]  md:gap-7'>
                         {/* left */}
-                        <div className='flex flex-col gap-2 items-center md:items-start'>
-                            <h1 className='dark:text-white text-3xl md:text-4xl font-semibold tracking-widest'>Invoices</h1>
-                            <p className='text-gray-500 text-sm'>There are 7 total invoices.</p>
+                        <div className='flex flex-col md:gap-2 items-start'>
+                            <h1 className='dark:text-white text-lg md:text-4xl font-semibold tracking-widest'>Invoices</h1>
+                            <p className='text-gray-500 text-sm md:text-md font-light'>There are 7 total invoices.</p>
                         </div>
                         {/* right */}
-                        <div className='flex justify-between items-center gap-5 md:gap-7'>
+                        <div className='flex justify-between items-center gap-2 md:gap-7'>
                             {/* filter button */}
                             <div className='flex items-center gap-1 md:gap-2 relative'>
                                 {/* filter */}
@@ -79,7 +80,7 @@ const Center = () => {
                                 >
                                     <IoIosArrowDown className='text-[#7C5DFA] font-bold text-lg' />
                                 </motion.div>
-                               
+
                                 {/* animation of drop down list */}
                                 <motion.div
                                     initial="exit"
@@ -88,32 +89,58 @@ const Center = () => {
                                     className='absolute top-10 text-white bg-[#7C5DFA] shadow-2xl px-2 pr-5 py-1 rounded'
                                 >
                                     {filter.map((item, i) => (
-                                        <div 
+                                        <div
                                             onClick={() => handleFilterClick(item)}
                                             key={i} className='flex gap-4 items-center cursor-pointer'
                                         >
-                                            <input 
-                                                type="checkbox" 
+                                            <input
+                                                type="checkbox"
                                                 checked={filterVal === item}
-                                                readOnly 
+                                                readOnly
                                             />
                                             <p>{item}</p>
                                         </div>
                                     ))}
                                 </motion.div>
-                             
+
                             </div>
                             {/* add invoice button */}
                             <div>
-                                <button className='flex items-center text-white font-medium bg-[#7C5DFA] p-1 rounded cursor-pointer gap-2'>
+                                <button className='flex items-center text-white font-medium bg-[#7C5DFA] p-2 md:p-1 rounded cursor-pointer gap-2'>
                                     <FiPlus className='text-[#7C5DFA] font-bold text-lg bg-white rounded' />
-                                    Invoice
+                                    <span className='hidden md:hidden'>
+                                        Invoice
+                                    </span>
                                 </button>
                             </div>
                         </div>
                     </div>
                     {/* cards container */}
-                    <div>
+                    <div className='flex flex-col gap-5 mt-8'>
+                        {invoices.map((invoice, index) => (
+                            <motion.div
+                                key={invoice.id}
+                                initial={{ opacity: 0, y: -50 }}
+                                animate={{ opacity: 1, y: 0, transition: { delay: index * 0.2 } }}
+                                // exit={{ opacity: 0, y: 50 }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <div className='dark:text-white flex justify-between ease-in-out duration-100 dark:bg-[#1E2139] bg-white py-4 px-6 rounded hover:border border-[#7C5DFA]'>
+                                    <div className='flex items-center gap-6'>
+                                        <h1>#{invoice.id}</h1>
+                                        <p className='text-sm text-gray-400 font-light'>{invoice.paymentDue}</p>
+                                        <p className='text-sm text-gray-400 font-light'>{invoice.clientName}</p>
+                                    </div>
+                                    <div className='flex items-center '>
+                                        <p>{invoice.total}</p>
+                                        <p className='bg-green-50 p-2 rounded ml-6 text-green-500'>{invoice.status}</p>
+                                        <IoIosArrowForward className='text-[hsl(252,94%,67%)] ml-3'/>
+                                    </div>
+
+                                </div>
+                            </motion.div>
+
+                        ))}
 
                     </div>
                 </div>

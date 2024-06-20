@@ -58,7 +58,7 @@ const Header = () => {
                 </div>
             </header>
             <div className='z-50 hidden lg:block'>
-                <div className='fixed top-0 left-0 w-[150px] h-screen dark:bg-[#1e2139] bg-[#373b53] flex flex-col justify-between duration-300 ease-in-out'>
+                <div className='fixed top-0 left-0 w-[110px] h-screen dark:bg-[#1e2139] bg-[#373b53] flex flex-col justify-between duration-300 ease-in-out'>
                     <div>
                         <h1 className='text-white text-2xl px-2 pt-5 font-semibold'>Invoices</h1>
                     </div>
