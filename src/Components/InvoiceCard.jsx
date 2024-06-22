@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const InvoiceCard = ({ invoice }) => {
     return (
-        <>
+        <Link to={`/${invoice.id}`}>
             <div className='hidden md:flex dark:text-white shadow-lg  justify-between ease-in-out duration-100 dark:bg-[#1E2139] bg-white py-4 px-6 rounded hover:border border-[#7C5DFA]'>
                 <div className='flex items-center gap-6'>
                     <h1>#{invoice.id}</h1>
@@ -33,7 +33,7 @@ const InvoiceCard = ({ invoice }) => {
                     
                 </div>
             </div>
-        </>
+        </Link>
     )
 }
 

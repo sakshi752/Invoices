@@ -54,7 +54,7 @@ const Header = () => {
                         {/* border */}
                     </div>
                     <div>
-                        <CgGirl className='text-4xl text-pink-400' />
+                        <img src={avatar} className='h-10 mt-3 rounded-full' alt="" />
                     </div>
                 </div>
             </header>
