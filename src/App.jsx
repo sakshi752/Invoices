@@ -8,7 +8,7 @@ function App() {
     const [colorTheme, setTheme] = useTheme();
 
     return (
-        <div className='dark:bg-[#141621] duration-300 min-h-screen bg-[#f8f8fb] tracking-widest overflow-x-hidden'>
+        <div className='dark:bg-[#141625] duration-300 min-h-screen bg-[#f8f8fb] tracking-widest overflow-x-hidden'>
             {/* header section */}
             <Header/>
             <Outlet/>

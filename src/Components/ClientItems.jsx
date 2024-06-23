@@ -33,23 +33,23 @@ const ClientItems = ({ items }) => {
     };
 
     return (
-        <div className="">
-            <div className={`transition-opacity duration-300 ${fade ? 'opacity-0' : 'opacity-100'} h-[170px] overflow-hidden`} >
-                <table className="min-w-full">
+        <>
+            <div className={`transition-opacity duration-300 ${fade ? 'opacity-0' : 'opacity-100'} overflow-hidden h-[280px] md:h-[180px]`} >
+                <table className="min-w-full ">
                     <thead>
                         <tr className="w-full bg-gray-800 text-white">
-                            <th className="py-2 px-4">Item name</th>
-                            <th className="py-2 px-4">Qty</th>
-                            <th className="py-2 px-4">Item price</th>
-                            <th className="py-2 px-4">Total price</th>
+                            <th className=" py-2 px-4">Item name</th>
+                            <th className=" py-2 px-4 hidden md:inline-block">Qty</th>
+                            <th className=" py-2 px-4 hidden md:inline-block">Item price</th>
+                            <th className=" py-2 px-4">Total price</th>
                         </tr>
                     </thead>
                     <tbody>
                         {currentItems.map((item, index) => (
                             <tr key={index} className="border-b">
                                 <td className="py-2 px-4">{item.name}</td>
-                                <td className="py-2 px-4">{item.quantity}</td>
-                                <td className="py-2 px-4">${item.price.toFixed(2)}</td>
+                                <td className="py-2 px-4 hidden md:inline-block">{item.quantity}</td>
+                                <td className="py-2 px-4 hidden md:inline-block">${item.price.toFixed(2)}</td>
                                 <td className="py-2 px-4">${item.total.toFixed(2)}</td>
                             </tr>
                         ))}
@@ -72,7 +72,7 @@ const ClientItems = ({ items }) => {
                     Next
                 </button>
             </div>
-        </div>
+        </>
     );
 };
 
