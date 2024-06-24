@@ -50,9 +50,15 @@
         "quantity": 1,
         "price": 200.00,
         "total": 200.00
+      },
+      {
+        "name": "Website Mockup",
+        "quantity": 1,
+        "price": 500.00,
+        "total": 500.00
       }
     ],
-    "total": 2950.90
+    "total": 3450.90
   },
   {
     "id": "XM9141",
@@ -105,9 +111,15 @@
         "quantity": 10,
         "price": 15.00,
         "total": 150.00
+      },
+      {
+        "name": "Social Media Posts",
+        "quantity": 5,
+        "price": 20.00,
+        "total": 100.00
       }
     ],
-    "total": 1156.00
+    "total": 1256.00
   },
   {
     "id": "RG0314",
@@ -160,9 +172,21 @@
         "quantity": 1,
         "price": 800.00,
         "total": 800.00
+      },
+      {
+        "name": "Landing Page Design",
+        "quantity": 1,
+        "price": 1500.00,
+        "total": 1500.00
+      },
+      {
+        "name": "UI/UX Review",
+        "quantity": 1,
+        "price": 500.00,
+        "total": 500.00
       }
     ],
-    "total": 20302.33
+    "total": 22302.33
   },
   {
     "id": "RT2080",
@@ -215,9 +239,21 @@
         "quantity": 1,
         "price": 150.00,
         "total": 150.00
+      },
+      {
+        "name": "Website Banner",
+        "quantity": 1,
+        "price": 200.00,
+        "total": 200.00
+      },
+      {
+        "name": "Social Media Kit",
+        "quantity": 1,
+        "price": 250.00,
+        "total": 250.00
       }
     ],
-    "total": 602.04
+    "total": 1052.04
   },
   {
     "id": "AA1449",
@@ -270,9 +306,21 @@
         "quantity": 1,
         "price": 1800.00,
         "total": 1800.00
+      },
+      {
+        "name": "Flyer Design",
+        "quantity": 100,
+        "price": 1.00,
+        "total": 100.00
+      },
+      {
+        "name": "Email Newsletter",
+        "quantity": 1,
+        "price": 300.00,
+        "total": 300.00
       }
     ],
-    "total": 6032.33
+    "total": 6432.33
   },
   {
     "id": "TY9141",
@@ -325,9 +373,21 @@
         "quantity": 1,
         "price": 500.00,
         "total": 500.00
+      },
+      {
+        "name": "Social Media Campaign",
+        "quantity": 1,
+        "price": 1000.00,
+        "total": 1000.00
+      },
+      {
+        "name": "Landing Page Optimization",
+        "quantity": 1,
+        "price": 500.00,
+        "total": 500.00
       }
     ],
-    "total": 10955.91
+    "total": 12355.91
   },
   {
     "id": "FV2353",
@@ -380,8 +440,20 @@
         "quantity": 1,
         "price": 300.00,
         "total": 300.00
+      },
+      {
+        "name": "Website Banner",
+        "quantity": 1,
+        "price": 500.00,
+        "total": 500.00
+      },
+      {
+        "name": "Email Template Design",
+        "quantity": 1,
+        "price": 250.00,
+        "total": 250.00
       }
     ],
-    "total": 3802.04
+    "total": 4552.04
   }
 ]
