@@ -1,9 +1,19 @@
 import { motion } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { RxCross2 } from "react-icons/rx";
+import AddNewItem from './AddNewItem';
 
 const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
     const menuRef = useRef();
+
+    const [item, setItem] = useState([{
+        "id": Date.now(),
+        'name': "",
+        'quantity': 1,
+        'price': 0,
+        'total': 0,
+
+    }])
 
     useEffect(() => {
         const handler = (e) => {
@@ -32,7 +42,7 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                 className='flex flex-col dark:text-white dark:bg-[#141625] bg-white md:pl-[150px] py-16 px-6 h-screen md:w-[768px] md:rounded-r-3xl'
                 ref={menuRef}
             >
-                <div id='invoice-header' className='fixed top-10 w-full flex justify-between'>
+                <div className='fixed top-10 w-full flex justify-between'>
                     <h1 className='text-3xl font-semibold'>Create Invoice</h1>
                 </div>
                 <form className='flex flex-col mt-16 mb-16 pb-3 space-y-6 overflow-y-scroll scrollbar-hide'>
@@ -59,17 +69,30 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
 
                         </div>
                     </div>
-                    {/* Item list */}
+                    {/* date, time limit and description */}
                     <div className='grid grid-cols-2 gap-4'>
                         <input type='date' className='border-2 py-2 px-4 rounded-md text-black focus:outline-none focus:border-[#7C5DFA]' placeholder='Country' />
-
-                        <select  className=' appearance-none py-2 px-4 border-[.2px] rounded-lg focus:outline-none  dark:bg-[#1e2139] dark:text-white dark:border-gray-800  focus:outline-purple-400 border-gray-300 select-status' >
+                        <select name="" id=""
+                            className='border-2 py-2 px-4 rounded-md text-black focus:outline-none focus:border-[#7C5DFA]'
+                        >
                             <option value="1">next 1 day</option>
                             <option value="1">next 1 week</option>
                             <option value="1">next 1 month</option>
                             <option value="1">next 1 year</option>
                         </select>
+                        <input
+                            className='border-2 py-2 px-4 rounded-md text-black focus:outline-none focus:border-[#7C5DFA] col-span-2'
+                            type="text" placeholder='description' />
                     </div>
+                    {/* item list */}
+                    <div className='flex flex-col gap-5'>
+                        <h1 className='text-2xl'>Item List</h1>
+                        {item.map(({ id, name, quantity, price, total }) => (
+                            <AddNewItem />
+                        ))}
+
+                    </div>
+
                 </form>
                 <div className='fixed bottom-10 flex gap-5'>
                     <motion.button
@@ -97,3 +120,4 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
 }
 
 export default CreateInvoice;
+// 

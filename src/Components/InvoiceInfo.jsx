@@ -10,12 +10,14 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { FcPaid } from "react-icons/fc";
 import { motion } from 'framer-motion';
+import DeleteModal from './DeleteModal';
 
 
 const InvoiceInfo = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
+    const [deleteModal,setDeleteModal]=useState(false)
 
     useEffect(() => {
         dispatch(invoiceSlice.actions.getInvoiceById({ id }));
@@ -24,7 +26,9 @@ const InvoiceInfo = () => {
 
     const invoice = useSelector((state) => state.invoices.invoiceById);
 
-
+    const deleteModalHandler=()=>{
+        setDeleteModal(!deleteModal);
+    }
 
     return (
         <>
@@ -52,7 +56,9 @@ const InvoiceInfo = () => {
                                 whileHover={{
                                     scale:1.1,
                                 }}
-                                className='bg-red-500 text-white  p-3 px-2 rounded hover:opacity-80'>Delete</motion.button>
+                                className='bg-red-500 text-white  p-3 px-2 rounded hover:opacity-80'
+                                onClick={deleteModalHandler}
+                                >Delete</motion.button>
                                 <motion.button
                                 whileHover={{
                                     scale:1.1,
@@ -134,7 +140,7 @@ const InvoiceInfo = () => {
                     </div>
                 </div>
             ) : <Loading />}
-
+            {deleteModal && <DeleteModal deleteModalHandler={deleteModalHandler}/>}
         </>
 
     );
