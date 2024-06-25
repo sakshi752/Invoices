@@ -9,8 +9,7 @@ const InvoiceCard = ({ invoice }) => {
     return (
         <Link to={`/${invoice.id}`}>
             <motion.div
-             whileHover={{ scale: 1.1 }}
-             transition={{duration:.5}}
+                
             >
                 {/* big screen */}
                 <div className='hidden md:flex dark:text-white shadow-lg  justify-between ease-in-out duration-100 dark:bg-[#1E2139] bg-white py-4 px-6 rounded hover:border border-[#7C5DFA]'>
