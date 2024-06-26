@@ -6,14 +6,34 @@ import AddNewItem from './AddNewItem';
 const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
     const menuRef = useRef();
 
+    // sender's info
+    const [senderStreet, setSenderStreet] = useState('');
+    const [senderCity, setSenderCity] = useState('');
+    const [senderPostCode, setSenderPostCode] = useState('');
+    const [senderCountry, setSenderCountry] = useState('');
+
+    // client's info
+    const [clientName, setClientName] = useState('');
+    const [clientMail, setClientMail] = useState('');
+    const [clientStreet, setClientStreet] = useState('');
+    const [clientCity, setClientCity] = useState('');
+    const [clientPostCode, setClientPostCode] = useState('');
+    const [clientCountry, setClientCountry] = useState('');
+
+    const deliveryTimes=[1,7,14,30];
+
+    // info related to the items
+    const [description, setDescription] = useState('');
+    const [deliveryDate, setDeliveryDate] = useState('');
+    const [paymentTerms, setpaymentTerms] = useState(deliveryTimes[0]);
+
     const [item, setItem] = useState([{
         "id": Date.now(),
         'name': "",
         'quantity': 1,
         'price': 0,
         'total': 0,
-
-    }])
+    }]);
 
     useEffect(() => {
         const handler = (e) => {
@@ -31,11 +51,26 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
             document.removeEventListener('mousedown', handler);
         };
     }, [setOpenCreateInvoice]);
-    // const [paymentTerms,setpaymentTerms]=useEffect()
+
+    const addItem = () => {
+        setItem(prevItems => [...prevItems, {
+            "id": Date.now(),
+            'name': "",
+            'quantity': 1,
+            'price': 0,
+            'total': 0,
+        }]);
+    };
+
+    const removeItem = (id) => {
+        const updatedItems = item.filter(item => item.id !== id);
+        setItem(updatedItems);
+    };
 
     return (
         <div className='fixed top-0 bottom-0 left-0 right-0 bg-[#000005be]'>
             <motion.div
+                onClick={(e) => e.stopPropagation()}
                 initial={{ x: -500, opacity: 0 }}
                 animate={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 300, damping: 40, duration: 1 } }}
                 exit={{ x: -700, transition: { duration: .7 } }}
@@ -50,49 +85,121 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                     <div>
                         <h1 className='text-lg font-semibold mb-2 text-[#7C5DFA]'>Bill From</h1>
                         <div className='grid grid-cols-3 gap-4'>
-                            <input type='text' className='border-2 col-span-3 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder="Sender's address" />
-                            <input type='text' className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder='City' />
-                            <input type='text' className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder='Post Code' />
-                            <input type='text' className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder='Country' />
+                            <input
+                                type='text'
+                                className='border-2 col-span-3 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder="Sender's address"
+                                value={senderStreet}
+                                onChange={(e) => setSenderStreet(e.target.value)}
+                            />
+                            <input
+                                type='text'
+                                className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder='City'
+                                value={senderCity}
+                                onChange={(e) => setSenderCity(e.target.value)}
+                            />
+                            <input
+                                type='text'
+                                className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder='Post Code'
+                                value={senderPostCode}
+                                onChange={(e) => setSenderPostCode(e.target.value)}
+                            />
+                            <input
+                                type='text'
+                                className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder='Country'
+                                value={senderCountry}
+                                onChange={(e) => setSenderCountry(e.target.value)}
+                            />
                         </div>
                     </div>
                     {/* Bill to */}
                     <div>
                         <h1 className='text-lg font-semibold mb-2 text-[#7C5DFA]'>Bill To</h1>
                         <div className='grid grid-cols-3 gap-4'>
-                            <input type='text' className='border-2 col-span-3 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder='Client Name' />
-                            <input type='text' className='border-2 col-span-3 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder='Client Email' />
-                            <input type='text' className='border-2 col-span-3 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder="Client's Address" />
-                            <input type='text' className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder='City' />
-                            <input type='text' className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder='Pin Code' />
-                            <input type='text' className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]' placeholder='Country' />
-
+                            <input
+                                type='text'
+                                className='border-2 col-span-3 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder='Client Name'
+                                value={clientName}
+                                onChange={(e) => setClientName(e.target.value)}
+                            />
+                            <input
+                                type='text'
+                                className='border-2 col-span-3 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder='Client Email'
+                                value={clientMail}
+                                onChange={(e) => setClientMail(e.target.value)}
+                            />
+                            <input
+                                type='text'
+                                className='border-2 col-span-3 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder="Client's Address"
+                                value={clientStreet}
+                                onChange={(e) => setClientStreet(e.target.value)}
+                            />
+                            <input
+                                type='text'
+                                className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder='City'
+                                value={clientCity}
+                                onChange={(e) => setClientCity(e.target.value)}
+                            />
+                            <input
+                                type='text'
+                                className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder='Pin Code'
+                                value={clientPostCode}
+                                onChange={(e) => setClientPostCode(e.target.value)}
+                            />
+                            <input
+                                type='text'
+                                className='border-2 py-2 px-4 rounded-md focus:outline-none focus:border-[#7C5DFA]'
+                                placeholder='Country'
+                                value={clientCountry}
+                                onChange={(e) => setClientCountry(e.target.value)}
+                            />
                         </div>
                     </div>
                     {/* date, time limit and description */}
                     <div className='grid grid-cols-2 gap-4'>
-                        <input type='date' className='border-2 py-2 px-4 rounded-md text-black focus:outline-none focus:border-[#7C5DFA]' placeholder='Country' />
-                        <select name="" id=""
+                        <input
+                            value={deliveryDate}
+                            onChange={(e) => setDeliveryDate(e.target.value)}
+                            type='date' className='border-2 py-2 px-4 rounded-md text-black focus:outline-none focus:border-[#7C5DFA]' placeholder='Date' />
+                        <select
+                            value={paymentTerms} onChange={(e) => setpaymentTerms(e.target.value)}
+                            name="paymentTerms" id="paymentTerms"
                             className='border-2 py-2 px-4 rounded-md text-black focus:outline-none focus:border-[#7C5DFA]'
                         >
-                            <option value="1">next 1 day</option>
-                            <option value="1">next 1 week</option>
-                            <option value="1">next 1 month</option>
-                            <option value="1">next 1 year</option>
+                            {deliveryTimes.map((time)=>(
+                                <option key={time} value={time}>
+                                    Next {time} days
+                                </option>
+                            ))}
                         </select>
                         <input
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                             className='border-2 py-2 px-4 rounded-md text-black focus:outline-none focus:border-[#7C5DFA] col-span-2'
-                            type="text" placeholder='description' />
+                            type="text" placeholder='Description' />
                     </div>
                     {/* item list */}
-                    <div className='flex flex-col gap-5'>
+                    {/* <div className='flex flex-col gap-5'>
                         <h1 className='text-2xl'>Item List</h1>
                         {item.map(({ id, name, quantity, price, total }) => (
-                            <AddNewItem />
+                            <AddNewItem key={id} id={id} name={name} quantity={quantity} price={price} total={total} removeItem={removeItem} />
                         ))}
-
-                    </div>
-
+                        <button
+                            type="button"
+                            onClick={addItem}
+                            className='dark:bg-[#1e2139] bg-[#373b53] py-3 rounded font-bold text-lg'
+                        >
+                            Add new Item
+                        </button>
+                    </div> */}
                 </form>
                 <div className='fixed bottom-10 flex gap-5'>
                     <motion.button
@@ -103,7 +210,6 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                     >
                         Save
                     </motion.button>
-
                     <motion.button
                         whileTap={{ scale: 1.1 }}
                         whileHover={{ scale: 1.3 }}
@@ -119,5 +225,4 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
     );
 }
 
-export default CreateInvoice;
-// 
+export default CreateInvoice; 
