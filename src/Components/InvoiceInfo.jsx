@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import invoiceSlice from '../store/invoice';
 import StatusBtn from './StatusBtn';
 import { IoIosArrowBack } from "react-icons/io";
@@ -16,8 +16,9 @@ import DeleteModal from './DeleteModal';
 const InvoiceInfo = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [deleteModal,setDeleteModal]=useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
 
     useEffect(() => {
         dispatch(invoiceSlice.actions.getInvoiceById({ id }));
@@ -26,19 +27,27 @@ const InvoiceInfo = () => {
 
     const invoice = useSelector((state) => state.invoices.invoiceById);
 
-    const deleteModalHandler=()=>{
+    const deleteModalHandler = () => {
         setDeleteModal(!deleteModal);
+    }
+    const deleteInvoiceHandler = () => {
+        navigate('/')
+        setDeleteModal(false);
+        dispatch(invoiceSlice.actions.deleteInvoice({ id }));
+    }
+    const updateStatusHandler = () => {
+        dispatch(invoiceSlice.actions.updateStatusPaid({ id, status: invoice.status }));
     }
 
     return (
         <>
             {invoice ? (
-                <div 
-                className='dark:bg-[#141625] scrollbar-hide duration-300 min-h-screen bg-[#f8f8fb] dark:text-white py-[34px] px-2 md:px-8 lg:px-12 lg:py-[72px] w-full'>
+                <div
+                    className='dark:bg-[#141625] scrollbar-hide duration-300 min-h-screen bg-[#f8f8fb] dark:text-white py-[34px] px-2 md:px-8 lg:px-12 lg:py-[72px] w-full'>
                     <div className='max-w-3xl mx-auto'>
                         <Link to={'/'} className='flex items-center'>
-                        <IoIosArrowBack className='text-[hsl(252,94%,67%)] mr-2' /> 
-                        Go back
+                            <IoIosArrowBack className='text-[hsl(252,94%,67%)] mr-2' />
+                            Go back
                         </Link>
                         {/* invoice header */}
                         <div className='flex justify-between mt-6 items-center dark:bg-[#1e2139] bg-white shadow-lg px-7 py-5 rounded-md'>
@@ -48,40 +57,60 @@ const InvoiceInfo = () => {
                             </div>
                             <div className='hidden md:flex items-center space-x-3 '>
                                 <motion.button
-                                whileHover={{
-                                    scale:1.1,
-                                }}
-                                className='text-[#7e88c3] text-center dark:bg-[#252945] hover:opacity-80  bg-slate-100 p-3 px-2 rounded '>Edit</motion.button>
+                                    whileHover={{
+                                        scale: 1.1,
+                                    }}
+                                    className='text-[#7e88c3] text-center dark:bg-[#252945] hover:opacity-80  bg-slate-100 p-3 px-2 rounded '>
+                                    Edit
+                                </motion.button>
                                 <motion.button
-                                whileHover={{
-                                    scale:1.1,
-                                }}
-                                className='bg-red-500 text-white  p-3 px-2 rounded hover:opacity-80'
-                                onClick={deleteModalHandler}
-                                >Delete</motion.button>
-                                <motion.button
-                                whileHover={{
-                                    scale:1.1,
-                                }}
-                                className='bg-green-500 text-white  p-3 px-2 rounded hover:opacity-80'>Mark as paid</motion.button>
+                                    whileHover={{
+                                        scale: 1.1,
+                                    }}
+                                    className='bg-red-500 text-white  p-3 px-2 rounded hover:opacity-80'
+                                    onClick={deleteModalHandler}
+                                >
+                                    Delete
+                                </motion.button>
+
+                                {invoice.status !== 'paid' && (
+                                    <motion.button
+                                        whileHover={{
+                                            scale: 1.1,
+                                        }}
+                                        onClick={updateStatusHandler}
+                                        className='bg-green-500 text-white  p-3 px-2 rounded hover:opacity-80'>
+                                        Mark as paid
+                                    </motion.button>
+                                )}
+
                             </div>
                             {/* hide for large screen */}
-                            <div className='flex items-center space-x-2 md:hidden'>
-                                <motion.button 
-                                whileHover={{
-                                    scale:1.5
-                                }}
-                                className='text-[#7e88c3] text-center dark:bg-[#252945] hover:opacity-80  bg-slate- text-xl rounded '><FaEdit /></motion.button>
-                                <motion.button 
-                                whileHover={{
-                                    scale:1.5
-                                }}
-                                className='bg-red-500 text-white text-xl rounded hover:opacity-80'><MdDelete /></motion.button>
-                                <motion.button 
-                                whileHover={{
-                                    scale:1.5
-                                }}
-                                className='bg-green-500 text-white text-xl rounded hover:opacity-80'><FcPaid /></motion.button>
+                            <div className='flex items-center space-x-5 md:hidden'>
+                                <motion.button
+                                    whileHover={{
+                                        scale: 1.5
+                                    }}
+                                    
+                                    className='text-[#7e88c3] text-center dark:bg-[#252945] hover:opacity-80  bg-slate- text-xl rounded '>
+                                    <FaEdit />
+                                </motion.button>
+                                <motion.button
+                                    whileHover={{
+                                        scale: 1.5
+                                    }}
+                                    onClick={deleteModalHandler}
+                                    className='bg-red-500 text-white text-xl rounded hover:opacity-80'>
+                                    <MdDelete />
+                                </motion.button>
+                                <motion.button
+                                    whileHover={{
+                                        scale: 1.5
+                                    }}
+                                    onClick={updateStatusHandler}
+                                    className='bg-green-500 text-white text-xl rounded hover:opacity-80'>
+                                    <FcPaid />
+                                </motion.button>
                             </div>
                         </div>
 
@@ -140,7 +169,7 @@ const InvoiceInfo = () => {
                     </div>
                 </div>
             ) : <Loading />}
-            {deleteModal && <DeleteModal deleteModalHandler={deleteModalHandler}/>}
+            {deleteModal && <DeleteModal deleteModalHandler={deleteModalHandler} deleteInvoiceHandler={deleteInvoiceHandler} />}
         </>
 
     );

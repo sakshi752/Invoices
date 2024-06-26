@@ -136,11 +136,11 @@ const Center = () => {
                     ))}
                 </div>
             </div>
-            <AnimatePresence>
+
                 {openCreateInvoice &&
                     <CreateInvoice openCreateInvoice={openCreateInvoice} setOpenCreateInvoice={setOpenCreateInvoice} />
                 }
-            </AnimatePresence>
+
         </div>
     );
 };

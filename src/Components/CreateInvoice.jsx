@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import AddNewItem from './AddNewItem';
@@ -211,16 +211,21 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                     {/* item list */}
                     <div className='flex flex-col gap-5'>
                         <h1 className='text-2xl text-[#7C5DFA]'>Item List</h1>
-                        {item.map(({ id, name, quantity, price, total }) => (
-                            <AddNewItem key={id} id={id} name={name} quantity={quantity} price={price} total={total} removeItem={removeItem} handleOnChange={handleOnChange} />
-                        ))}
-                        <button
+                        <AnimatePresence>
+                            {item.map(({ id, name, quantity, price, total }) => (
+                                <AddNewItem key={id} id={id} name={name} quantity={quantity} price={price} total={total} removeItem={removeItem} handleOnChange={handleOnChange} />
+                            ))}
+                        </AnimatePresence>
+
+                        <motion.button
+                        whileHover={{scale:1.2}}
+                            whileTap={{ scale: 0.85 }}
                             type="button"
                             onClick={addItem}
                             className='dark:bg-[#1e2139] bg-[#373b53] py-3 rounded font-bold text-lg text-[#7C5DFA]'
                         >
                             Add new Item
-                        </button>
+                        </motion.button>
                     </div>
                 </form>
                 <div className='fixed bottom-10 flex gap-5'>
