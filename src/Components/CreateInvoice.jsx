@@ -20,7 +20,7 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
     const [clientPostCode, setClientPostCode] = useState('');
     const [clientCountry, setClientCountry] = useState('');
 
-    const deliveryTimes=[1,7,14,30];
+    const deliveryTimes = [1, 7, 14, 30];
 
     // info related to the items
     const [description, setDescription] = useState('');
@@ -67,6 +67,28 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
         setItem(updatedItems);
     };
 
+    const handleOnChange = (id, e) => {
+        const data = [...item];
+        const foundData = data.find(
+            el => el.id === id
+        );
+        if (e.target.name === 'price' || e.target.name === 'quantity') {
+            if (e.target.name === 'price') {
+                foundData.price = e.target.value;
+            }
+            else {
+                foundData.quantity = e.target.value
+            }
+
+            foundData.total = foundData.price * foundData.quantity
+        }
+        else {
+            foundData.name = e.target.value
+        }
+
+        setItem(data)
+    }
+
     return (
         <div className='fixed top-0 bottom-0 left-0 right-0 bg-[#000005be]'>
             <motion.div
@@ -80,7 +102,7 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                 <div className='fixed top-10 w-full flex justify-between'>
                     <h1 className='text-3xl font-semibold'>Create Invoice</h1>
                 </div>
-                <form className='flex flex-col mt-16 mb-16 pb-3 space-y-6 overflow-y-scroll scrollbar-hide'>
+                <form className='flex flex-col mt-16 mb-16 pb-3 space-y-6 overflow-y-scroll scrollbar-hide text-black'>
                     {/* Bill from */}
                     <div>
                         <h1 className='text-lg font-semibold mb-2 text-[#7C5DFA]'>Bill From</h1>
@@ -174,7 +196,7 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                             name="paymentTerms" id="paymentTerms"
                             className='border-2 py-2 px-4 rounded-md text-black focus:outline-none focus:border-[#7C5DFA]'
                         >
-                            {deliveryTimes.map((time)=>(
+                            {deliveryTimes.map((time) => (
                                 <option key={time} value={time}>
                                     Next {time} days
                                 </option>
@@ -187,19 +209,19 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                             type="text" placeholder='Description' />
                     </div>
                     {/* item list */}
-                    {/* <div className='flex flex-col gap-5'>
-                        <h1 className='text-2xl'>Item List</h1>
+                    <div className='flex flex-col gap-5'>
+                        <h1 className='text-2xl text-[#7C5DFA]'>Item List</h1>
                         {item.map(({ id, name, quantity, price, total }) => (
-                            <AddNewItem key={id} id={id} name={name} quantity={quantity} price={price} total={total} removeItem={removeItem} />
+                            <AddNewItem key={id} id={id} name={name} quantity={quantity} price={price} total={total} removeItem={removeItem} handleOnChange={handleOnChange} />
                         ))}
                         <button
                             type="button"
                             onClick={addItem}
-                            className='dark:bg-[#1e2139] bg-[#373b53] py-3 rounded font-bold text-lg'
+                            className='dark:bg-[#1e2139] bg-[#373b53] py-3 rounded font-bold text-lg text-[#7C5DFA]'
                         >
                             Add new Item
                         </button>
-                    </div> */}
+                    </div>
                 </form>
                 <div className='fixed bottom-10 flex gap-5'>
                     <motion.button
