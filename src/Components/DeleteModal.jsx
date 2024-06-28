@@ -16,12 +16,12 @@ const DeleteModal = ({ deleteModalHandler, deleteInvoiceHandler }) => {
         };
     }, []);
     return (
-        <div className='fixed inset-0 z-50 bg-[#000005be] flex items-center justify-center'>
+        <div className='fixed inset-0  bg-[#000005be] flex items-center justify-center'>
 
             <div
                 onClick={(e) => e.stopPropagation()}
                 ref={deleteRef}
-                className='bg-white dark:bg-[#1e2139] rounded-lg shadow-lg p-6 z-10 max-w-lg w-full mx-5 md:mx-0'>
+                className='bg-white dark:bg-[#1e2139] rounded-lg shadow-lg p-6  max-w-lg w-full mx-5 md:mx-0'>
                 <h2 className='text-lg font-semibold mb-4 dark:text-white'>Confirm Deletion</h2>
                 <p className='text-gray-600 dark:text-gray-300 mb-6'>Are you sure you want to delete this invoice? This action cannot be undone.</p>
                 <div className='flex justify-end space-x-4'>

@@ -2,8 +2,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import AddNewItem from './AddNewItem';
+import invoiceSlice from '../store/invoice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
+    const dispatch = useDispatch();
     const menuRef = useRef();
 
     // sender's info
@@ -27,7 +30,7 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
     const [deliveryDate, setDeliveryDate] = useState('');
     const [paymentTerms, setpaymentTerms] = useState(deliveryTimes[0]);
 
-    const [item, setItem] = useState([{
+    const [items, setItems] = useState([{
         "id": Date.now(),
         'name': "",
         'quantity': 1,
@@ -53,7 +56,7 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
     }, [setOpenCreateInvoice]);
 
     const addItem = () => {
-        setItem(prevItems => [...prevItems, {
+        setItems(prevItems => [...prevItems, {
             "id": Date.now(),
             'name': "",
             'quantity': 1,
@@ -63,32 +66,35 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
     };
 
     const removeItem = (id) => {
-        const updatedItems = item.filter(item => item.id !== id);
-        setItem(updatedItems);
+        const updatedItems = items.filter(item => item.id !== id);
+        setItems(updatedItems);
     };
-
+    
     const handleOnChange = (id, e) => {
-        const data = [...item];
-        const foundData = data.find(
-            el => el.id === id
+        setItems(prevItems =>
+            prevItems.map(item => {
+                if (item.id === id) {
+                    // Create a new object with updated values
+                    const updatedItem = {
+                        ...item,
+                        [e.target.name]: e.target.value
+                    };
+                    // If the updated field is 'price' or 'quantity', recalculate 'total'
+                    if (e.target.name === 'price' || e.target.name === 'quantity') {
+                        updatedItem.total = updatedItem.price * updatedItem.quantity;
+                    }
+                    return updatedItem;
+                }
+                return item; // Return the item unchanged if id does not match
+            })
         );
-        if (e.target.name === 'price' || e.target.name === 'quantity') {
-            if (e.target.name === 'price') {
-                foundData.price = e.target.value;
-            }
-            else {
-                foundData.quantity = e.target.value
-            }
-
-            foundData.total = foundData.price * foundData.quantity
-        }
-        else {
-            foundData.name = e.target.value
-        }
-
-        setItem(data)
+    };
+    
+    const addInvoiceHandler=()=>{
+        dispatch(invoiceSlice.actions.addInvoice({
+            senderCity,senderStreet,senderCountry,senderPostCode,clientCity,clientCountry,clientPostCode,clientStreet,clientName,clientMail,description,deliveryDate,paymentTerms,items
+        }));
     }
-
     return (
         <div className='fixed top-0 bottom-0 left-0 right-0 bg-[#000005be]'>
             <motion.div
@@ -212,13 +218,13 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                     <div className='flex flex-col gap-5'>
                         <h1 className='text-2xl text-[#7C5DFA]'>Item List</h1>
                         <AnimatePresence>
-                            {item.map(({ id, name, quantity, price, total }) => (
+                            {items.map(({ id, name, quantity, price, total }) => (
                                 <AddNewItem key={id} id={id} name={name} quantity={quantity} price={price} total={total} removeItem={removeItem} handleOnChange={handleOnChange} />
                             ))}
                         </AnimatePresence>
 
                         <motion.button
-                        whileHover={{scale:1.2}}
+                            whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.85 }}
                             type="button"
                             onClick={addItem}
@@ -234,6 +240,7 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                         whileHover={{ scale: 1.3 }}
                         transition={{ duration: 0.5 }}
                         className='bg-[#7C5DFA] text-white px-4 py-2 rounded-md cursor-pointer'
+                        onClick={addInvoiceHandler}
                     >
                         Save
                     </motion.button>

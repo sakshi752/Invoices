@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import { FiPlus } from 'react-icons/fi';
-import { motion,AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import InvoiceCard from './InvoiceCard';
 import invoiceSlice from '../store/invoice';
@@ -114,13 +114,13 @@ const Center = () => {
                                 whileTap={{ scale: 1.1 }}
                                 whileHover={{ scale: 1.3 }}
                                 className="flex items-center text-white font-medium bg-[#7C5DFA] p-2 md:p-1 rounded cursor-pointer gap-2"
-                                onClick={()=>setOpenCreateInvoice(!openCreateInvoice)}>
+                                onClick={() => setOpenCreateInvoice(!openCreateInvoice)}>
                                 <FiPlus className="text-[#7C5DFA] font-bold text-lg bg-white rounded" />
                                 <span className="hidden md:hidden">Invoice</span>
                             </motion.button>
                         </div>
                     </div>
-                </div> 
+                </div>
                 {/* cards container */}
                 <div className="flex flex-col gap-5 mt-8">
                     {invoices.map((invoice, index) => (
@@ -131,15 +131,17 @@ const Center = () => {
                             exit={{ opacity: 0, y: 50 }}
                             transition={{ duration: 0.5 }}
                         >
-                            <InvoiceCard invoice={invoice} />
+                            <InvoiceCard invoice={invoice}  />
                         </motion.div>
                     ))}
                 </div>
             </div>
-
+            <AnimatePresence>
                 {openCreateInvoice &&
                     <CreateInvoice openCreateInvoice={openCreateInvoice} setOpenCreateInvoice={setOpenCreateInvoice} />
                 }
+            </AnimatePresence>
+
 
         </div>
     );

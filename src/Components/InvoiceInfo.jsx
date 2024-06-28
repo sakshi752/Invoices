@@ -103,7 +103,9 @@ const InvoiceInfo = () => {
                                     className='bg-red-500 text-white text-xl rounded hover:opacity-80'>
                                     <MdDelete />
                                 </motion.button>
-                                <motion.button
+                                
+                                {invoice.status !== 'paid' && (
+                                    <motion.button
                                     whileHover={{
                                         scale: 1.5
                                     }}
@@ -111,6 +113,7 @@ const InvoiceInfo = () => {
                                     className='bg-green-500 text-white text-xl rounded hover:opacity-80'>
                                     <FcPaid />
                                 </motion.button>
+                                )}
                             </div>
                         </div>
 
