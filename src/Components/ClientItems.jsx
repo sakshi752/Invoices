@@ -10,7 +10,7 @@ const ClientItems = ({ items }) => {
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         setCurrentItems(items.slice(startIndex, startIndex + itemsPerPage));
-    }, [currentPage]);
+    }, [currentPage, items]);
 
     const handlePrev = () => {
         if (currentPage > 1) {
@@ -49,8 +49,8 @@ const ClientItems = ({ items }) => {
                             <tr key={index} className="border-b">
                                 <td className="py-2 px-4">{item.name}</td>
                                 <td className="py-2 px-4 hidden md:inline-block">{item.quantity}</td>
-                                <td className="py-2 px-4 hidden md:inline-block">${item.price.toFixed(2)}</td>
-                                <td className="py-2 px-4">${item.total.toFixed(2)}</td>
+                                <td className="py-2 px-4 hidden md:inline-block">{typeof item.price === 'number' ? `$${item.price.toFixed(2)}` : '-'}</td>
+                                <td className="py-2 px-4">{typeof item.total === 'number' ? `$${item.total.toFixed(2)}` : '-'}</td>
                             </tr>
                         ))}
                     </tbody>
