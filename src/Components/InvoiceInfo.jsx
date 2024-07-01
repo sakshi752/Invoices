@@ -26,6 +26,7 @@ const InvoiceInfo = () => {
     }, [dispatch, id]);
 
     const invoice = useSelector((state) => state.invoices.invoiceById);
+    console.log(invoice);
 
     const deleteModalHandler = () => {
         setDeleteModal(!deleteModal);
@@ -57,16 +58,16 @@ const InvoiceInfo = () => {
                             </div>
                             <div className='hidden md:flex items-center space-x-3 '>
                                 <motion.button
-                                    whileHover={{
-                                        scale: 1.1,
-                                    }}
+                                    transition={{ duration: 0.2 }}
+                                    whileTap={{ scale: .8 }}
+                                    whileHover={{ scale: 1.1 }}
                                     className='text-[#7e88c3] text-center dark:bg-[#252945] hover:opacity-80  bg-slate-100 p-3 px-2 rounded '>
                                     Edit
                                 </motion.button>
                                 <motion.button
-                                    whileHover={{
-                                        scale: 1.1,
-                                    }}
+                                    transition={{ duration: 0.2 }}
+                                    whileTap={{ scale: .8 }}
+                                    whileHover={{ scale: 1.1 }}
                                     className='bg-red-500 text-white  p-3 px-2 rounded hover:opacity-80'
                                     onClick={deleteModalHandler}
                                 >
@@ -75,9 +76,9 @@ const InvoiceInfo = () => {
 
                                 {invoice.status !== 'paid' && (
                                     <motion.button
-                                        whileHover={{
-                                            scale: 1.1,
-                                        }}
+                                        transition={{ duration: 0.2 }}
+                                        whileTap={{ scale: .8 }}
+                                        whileHover={{ scale: 1.1 }}
                                         onClick={updateStatusHandler}
                                         className='bg-green-500 text-white  p-3 px-2 rounded hover:opacity-80'>
                                         Mark as paid
@@ -88,42 +89,41 @@ const InvoiceInfo = () => {
                             {/* hide for large screen */}
                             <div className='flex items-center space-x-5 md:hidden'>
                                 <motion.button
-                                    whileHover={{
-                                        scale: 1.5
-                                    }}
-                                    
+                                    transition={{ duration: 0.2 }}
+                                    whileTap={{ scale: .8 }}
+                                    whileHover={{ scale: 1.1 }}
                                     className='text-[#7e88c3] text-center dark:bg-[#252945] hover:opacity-80  bg-slate- text-xl rounded '>
                                     <FaEdit />
                                 </motion.button>
                                 <motion.button
-                                    whileHover={{
-                                        scale: 1.5
-                                    }}
+                                    transition={{ duration: 0.2 }}
+                                    whileTap={{ scale: .8 }}
+                                    whileHover={{ scale: 1.1 }}
                                     onClick={deleteModalHandler}
                                     className='bg-red-500 text-white text-xl rounded hover:opacity-80'>
                                     <MdDelete />
                                 </motion.button>
-                                
+
                                 {invoice.status !== 'paid' && (
                                     <motion.button
-                                    whileHover={{
-                                        scale: 1.5
-                                    }}
-                                    onClick={updateStatusHandler}
-                                    className='bg-green-500 text-white text-xl rounded hover:opacity-80'>
-                                    <FcPaid />
-                                </motion.button>
+                                        transition={{ duration: 0.2 }}
+                                        whileTap={{ scale: .8 }}
+                                        whileHover={{ scale: 1.1 }}
+                                        onClick={updateStatusHandler}
+                                        className='bg-green-500 text-white text-xl rounded hover:opacity-80'>
+                                        <FcPaid />
+                                    </motion.button>
                                 )}
                             </div>
                         </div>
 
                         {/* invoice content */}
                         <div className='flex flex-col justify-between mt-6 dark:bg-[#1e2139] bg-white shadow-lg px-7 py-5 rounded-md'>
-                            {/* id and sender's address */}
+                            {/* id, client name and sender's address */}
                             <div className='flex md:justify-between flex-col md:flex-row w-full gap-4'>
                                 <div>
                                     <p className='text-xl font-bold '>#{invoice.id}</p>
-                                    <p className='text-gray-600 dark:text-gray-300 text-sm'>{invoice.clientName}</p>
+                                    <p className='text-gray-600 dark:text-gray-300 text-sm mt-2'> Client name: {invoice.clientName}</p>
                                 </div>
                                 <div className='flex flex-col md:items-end text-gray-600 dark:text-gray-300 text-sm gap-1'>
                                     <p>{invoice.senderAddress.street}</p>
@@ -141,7 +141,7 @@ const InvoiceInfo = () => {
                                     </div>
                                     <div>
                                         <p className='text-gray-600 dark:text-gray-300 text-sm'>Invoice Date</p>
-                                        <h1 className='text-xl font-semibold '>{invoice.createdAt}</h1>
+                                        <h1 className='text-xl font-semibold '>{invoice.paymentDue}</h1>
                                     </div>
                                 </div>
                                 <div>
@@ -156,7 +156,7 @@ const InvoiceInfo = () => {
                                 </div>
                                 <div className='flex md:items-start flex-col mt-10 md:mt-0'>
                                     <p className='text-gray-600 dark:text-gray-300 text-sm'>Sent to</p>
-                                    <h1 className='text-md font-semibold '>{invoice.clientEmail}</h1>
+                                    <h1 className='text-md font-semibold '>{invoice.clientMail}</h1>
                                 </div>
                             </div>
 
@@ -165,8 +165,8 @@ const InvoiceInfo = () => {
                             </div>
 
                             <div className='dark:bg-black bg-gray-700 text-white rounded-lg rounded-t-none flex justify-evenly py-7 font-semibold'>
-                                <p className='text-xl'>Total Payment</p>
-                                <p className='text-2xl'>{invoice.total}</p>
+                                <p className='text-xl'>Total Payment:</p>
+                                <p className='text-2xl'>${invoice.total}</p>
                             </div>
                         </div>
                     </div>

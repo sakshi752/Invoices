@@ -15,7 +15,7 @@ const forwardDate = (numDaysForward) => {
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState: {
-    allInvoices: data,
+    allInvoices: [],
     filteredInvoices: [],
     invoiceById: null,
     filterVal: '', // Assuming you have filterVal in your state
@@ -47,7 +47,7 @@ const invoiceSlice = createSlice({
       state.invoiceById = invoice;
     },
     addInvoice: (state, action) => {
-      const { senderCity, senderStreet, senderCountry, senderPostCode, clientCity, clientCountry, clientPostCode, clientStreet, clientName, clientEmail, description, paymentTerms, items } = action.payload;
+      const { senderCity, senderStreet, senderCountry, senderPostCode, clientCity, clientCountry, clientPostCode, clientStreet, clientName, clientMail, description, paymentTerms, items } = action.payload;
 
       const today = new Date().toISOString().split('T')[0];
       const newInvoice = {
@@ -57,7 +57,7 @@ const invoiceSlice = createSlice({
         description,
         paymentTerms,
         clientName,
-        clientEmail,
+        clientMail,
         status: "pending",
         senderAddress: {
           street: senderStreet,
@@ -80,6 +80,9 @@ const invoiceSlice = createSlice({
         state.filteredInvoices.push(newInvoice);
       }
     },
+    editInvoice:(state,action)=>{
+      
+    }
   },
 });
 

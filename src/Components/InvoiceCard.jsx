@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 const InvoiceCard = ({ invoice }) => {
     return (
         <Link to={`/${invoice.id}`}>
-            <motion.div
+            <div
                 
             >
                 {/* big screen */}
@@ -40,7 +40,7 @@ const InvoiceCard = ({ invoice }) => {
 
                     </div>
                 </div>
-            </motion.div>
+            </div>
 
         </Link>
     )

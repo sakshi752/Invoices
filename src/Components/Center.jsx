@@ -79,8 +79,8 @@ const Center = () => {
                                 initial={{ rotate: '0deg' }}
                                 animate={{ rotate: isDropDown ? '180deg' : '0deg' }}
                                 transition={transition}
-                                whileTap={{ scale: 0.8 }}
-                                whileHover={{ scale: 1.5 }}
+                                whileTap={{ scale: .9 }}
+                                whileHover={{ scale: 1.3 }}
                             >
                                 <IoIosArrowDown className="text-[#7C5DFA] font-bold text-lg" />
                             </motion.div>
@@ -110,9 +110,9 @@ const Center = () => {
                         {/* add invoice button */}
                         <div>
                             <motion.button
-                                transition={{ duration: 0.5 }}
-                                whileTap={{ scale: 1.1 }}
-                                whileHover={{ scale: 1.3 }}
+                                transition={{ duration: 0.2 }}
+                                whileTap={{ scale: .8 }}
+                                whileHover={{ scale: 1.1 }}
                                 className="flex items-center text-white font-medium bg-[#7C5DFA] p-2 md:p-1 rounded cursor-pointer gap-2"
                                 onClick={() => setOpenCreateInvoice(!openCreateInvoice)}>
                                 <FiPlus className="text-[#7C5DFA] font-bold text-lg bg-white rounded" />
@@ -122,19 +122,37 @@ const Center = () => {
                     </div>
                 </div>
                 {/* cards container */}
-                <div className="flex flex-col gap-5 mt-8">
-                    {invoices.map((invoice, index) => (
-                        <motion.div
-                            key={invoice.id}
-                            initial={{ opacity: 0, y: -50 }}
-                            animate={{ opacity: 1, y: 0, transition: { delay: index * 0.2 } }}
-                            exit={{ opacity: 0, y: 50 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <InvoiceCard invoice={invoice}  />
-                        </motion.div>
-                    ))}
-                </div>
+                {invoices.length === 0 ? (
+                    <div className='flex items-center justify-center flex-col gap-5 mt-9'>
+                        <p className='text-3xl dark:text-white'>
+                            No invoices!
+                        </p>
+                        <motion.button
+                            transition={{ duration: 0.2 }}
+                            whileTap={{ scale: .8 }}
+                            whileHover={{ scale: 1.1 }}
+                            className="flex items-center text-white font-medium bg-[#7C5DFA] p-2 md:p-1 rounded cursor-pointer gap-2  text-lg "
+                            onClick={() => setOpenCreateInvoice(!openCreateInvoice)}>
+
+                            Add Invoice
+                        </motion.button>
+                    </div>
+                ) : (
+                    <div className="flex flex-col gap-5 mt-8">
+                        {invoices.map((invoice, index) => (
+                            <motion.div
+                                key={invoice.id}
+                                initial={{ opacity: 0, y: -50 }}
+                                animate={{ opacity: 1, y: 0, transition: { delay: index * 0.2 } }}
+                                exit={{ opacity: 0, y: 50 }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <InvoiceCard invoice={invoice} />
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
+
             </div>
             <AnimatePresence>
                 {openCreateInvoice &&

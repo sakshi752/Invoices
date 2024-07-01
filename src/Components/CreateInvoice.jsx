@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import AddNewItem from './AddNewItem';
 import invoiceSlice from '../store/invoice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
     const dispatch = useDispatch();
@@ -94,6 +94,30 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
         dispatch(invoiceSlice.actions.addInvoice({
             senderCity,senderStreet,senderCountry,senderPostCode,clientCity,clientCountry,clientPostCode,clientStreet,clientName,clientMail,description,deliveryDate,paymentTerms,items
         }));
+        setSenderStreet("");
+        setSenderCity("");
+        setSenderPostCode("");
+        setSenderCountry("");
+
+        setClientStreet("");
+        setClientCity("");
+        setClientCountry("");
+        setClientMail("");
+        setClientName("");
+        setClientPostCode("");
+
+        setDescription("");
+        setpaymentTerms(deliveryTimes[0])
+        setDeliveryDate("");
+
+        setItems([{
+            "id": Date.now(),
+            'name': "",
+            'quantity': 1,
+            'price': 0,
+            'total': 0,
+        }]);
+        setOpenCreateInvoice(false)
     }
     return (
         <div className='fixed top-0 bottom-0 left-0 right-0 bg-[#000005be]'>
@@ -236,18 +260,18 @@ const CreateInvoice = ({ openCreateInvoice, setOpenCreateInvoice }) => {
                 </form>
                 <div className='fixed bottom-10 flex gap-5'>
                     <motion.button
-                        whileTap={{ scale: 1.1 }}
-                        whileHover={{ scale: 1.3 }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration: 0.2 }}
+                        whileTap={{ scale: .8 }}
+                        whileHover={{ scale: 1.1 }}
                         className='bg-[#7C5DFA] text-white px-4 py-2 rounded-md cursor-pointer'
                         onClick={addInvoiceHandler}
                     >
                         Save
                     </motion.button>
                     <motion.button
-                        whileTap={{ scale: 1.1 }}
-                        whileHover={{ scale: 1.3 }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration: 0.2 }}
+                        whileTap={{ scale: .8 }}
+                        whileHover={{ scale: 1.1 }}
                         className='bg-gray-300 text-gray-700 px-4 py-2 rounded-md cursor-pointer'
                         onClick={() => setOpenCreateInvoice(false)}
                     >

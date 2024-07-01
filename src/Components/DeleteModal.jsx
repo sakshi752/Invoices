@@ -1,4 +1,6 @@
+import { motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
+
 
 const DeleteModal = ({ deleteModalHandler, deleteInvoiceHandler }) => {
     const deleteRef = useRef();
@@ -17,7 +19,6 @@ const DeleteModal = ({ deleteModalHandler, deleteInvoiceHandler }) => {
     }, []);
     return (
         <div className='fixed inset-0  bg-[#000005be] flex items-center justify-center'>
-
             <div
                 onClick={(e) => e.stopPropagation()}
                 ref={deleteRef}
@@ -25,16 +26,22 @@ const DeleteModal = ({ deleteModalHandler, deleteInvoiceHandler }) => {
                 <h2 className='text-lg font-semibold mb-4 dark:text-white'>Confirm Deletion</h2>
                 <p className='text-gray-600 dark:text-gray-300 mb-6'>Are you sure you want to delete this invoice? This action cannot be undone.</p>
                 <div className='flex justify-end space-x-4'>
-                    <button
+                    <motion.button
+                        transition={{ duration: 0.2 }}
+                        whileTap={{ scale: .8 }}
+                        whileHover={{ scale: 1.1 }}
                         onClick={deleteModalHandler}
                         className='bg-gray-300 text-gray-700 dark:bg-[#252945] dark:text-gray-300 py-2 px-4 rounded hover:bg-gray-400 dark:hover:bg-[#2d2f48]'>
                         Cancel
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
+                        transition={{ duration: 0.2 }}
+                        whileTap={{ scale: .8 }}
+                        whileHover={{ scale: 1.1 }}
                         onClick={deleteInvoiceHandler}
                         className='bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600'>
                         Delete
-                    </button>
+                    </motion.button>
                 </div>
             </div>
         </div>
